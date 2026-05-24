@@ -38,7 +38,7 @@ public class TasksControllerTests
         var result = await _controller.Get(null, null, "asc");
 
         // Assert
-        var okResult = result as OkObjectResult;
+        var okResult = result.Result as OkObjectResult;
 
         okResult.Should().NotBeNull();
         okResult!.StatusCode.Should().Be(200);
@@ -76,7 +76,7 @@ public class TasksControllerTests
         var result = await _controller.Create(command);
 
         // Assert
-        var createdResult = result as CreatedResult;
+        var createdResult = result.Result as CreatedResult;
 
         createdResult.Should().NotBeNull();
         createdResult!.StatusCode.Should().Be(201);
@@ -102,7 +102,7 @@ public class TasksControllerTests
         var result = await _controller.ChangeStatus(routeId, command);
 
         // Assert
-        var badRequest = result as BadRequestObjectResult;
+        var badRequest = result.Result as BadRequestObjectResult;
 
         badRequest.Should().NotBeNull();
         badRequest!.StatusCode.Should().Be(400);
@@ -139,7 +139,7 @@ public class TasksControllerTests
         var result = await _controller.ChangeStatus(taskId, command);
 
         // Assert
-        var okResult = result as OkObjectResult;
+        var okResult = result.Result as OkObjectResult;
 
         okResult.Should().NotBeNull();
         okResult!.StatusCode.Should().Be(200);
