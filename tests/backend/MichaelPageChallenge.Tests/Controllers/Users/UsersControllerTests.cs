@@ -38,7 +38,7 @@ public class UsersControllerTests
         var result = await _controller.Get();
 
         // Assert
-        var okResult = result as OkObjectResult;
+        var okResult = result.Result as OkObjectResult;
 
         okResult.Should().NotBeNull();
         okResult!.StatusCode.Should().Be(200);
@@ -73,7 +73,7 @@ public class UsersControllerTests
         var result = await _controller.Create(command);
 
         // Assert
-        var createdResult = result as CreatedResult;
+        var createdResult = result.Result as CreatedResult;
 
         createdResult.Should().NotBeNull();
         createdResult!.StatusCode.Should().Be(201);
