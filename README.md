@@ -1,4 +1,4 @@
-# Michael Page Fullstack Challenge
+# Task Manager using Clean Architecture
 
 ## Overview
 This project implements a **Task Management System** using **.NET Web API** and **Angular** SPA, following **Clean Architecture**, CQRS with MediatR, and SQL Server.
@@ -13,16 +13,16 @@ It supports user and task management, including advanced filtering and JSON data
 
 ```
 src/backend/
- ├── MichaelPageChallenge.API
- ├── MichaelPageChallenge.Application
- ├── MichaelPageChallenge.Domain
- ├── MichaelPageChallenge.Infrastructure
+ ├── TaskManagerCleanArchitecture.API
+ ├── TaskManagerCleanArchitecture.Application
+ ├── TaskManagerCleanArchitecture.Domain
+ ├── TaskManagerCleanArchitecture.Infrastructure
 
 src/frontend/
  ├── task-manager-angular
 
 tests/
- ├── MichaelPageChallenge.Tests
+ ├── TaskManagerCleanArchitecture.Tests
 ```
 
 ### Layers - Backend
@@ -40,7 +40,7 @@ tests/
 
 ```
 cd src/backend
-dotnet run --project MichaelPageChallenge.API --launch-profile "https" --urls="https://localhost:44342"
+dotnet run --project TaskManagerCleanArchitecture.API --launch-profile "https" --urls="https://localhost:44342"
 ```
 
 Swagger available at:
@@ -55,7 +55,7 @@ https://localhost:PORT/swagger
 
 ```
 cd src/backend
-dotnet ef database update --project MichaelPageChallenge.Infrastructure --startup-project MichaelPageChallenge.API
+dotnet ef database update --project TaskManagerCleanArchitecture.Infrastructure --startup-project TaskManagerCleanArchitecture.API
 ```
 ---
 

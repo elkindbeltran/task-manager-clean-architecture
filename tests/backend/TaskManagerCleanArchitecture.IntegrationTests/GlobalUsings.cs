@@ -1,0 +1,17 @@
+﻿global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using FluentAssertions;
+global using TaskManagerCleanArchitecture.Application.Features.Users.Commands;
+global using TaskManagerCleanArchitecture.Application.DTOs.Users;
+global using TaskManagerCleanArchitecture.IntegrationTests.Fixtures;
+global using System.Net;
+global using System.Net.Http.Json;
+global using Xunit;
+global using TaskManagerCleanArchitecture.Infrastructure.Persistence;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using Microsoft.EntityFrameworkCore.Infrastructure;
+global using TaskManagerCleanArchitecture.Application.DTOs.Tasks;
+global using TaskManagerCleanArchitecture.Application.Features.Tasks.Commands;
+global using TaskManagerCleanArchitecture.Domain.Enums;
