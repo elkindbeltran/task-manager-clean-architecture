@@ -1,0 +1,10 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using TaskManagerCleanArchitecture.Domain.Entities;
+global using TaskManagerCleanArchitecture.Application.Interfaces;
+global using TaskManagerCleanArchitecture.Infrastructure.Repositories;
+global using Microsoft.Extensions.DependencyInjection;
+global using TaskManagerCleanArchitecture.Infrastructure.Persistence;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using TaskManagerCleanArchitecture.Domain.Enums;
+global using System.Diagnostics.CodeAnalysis;

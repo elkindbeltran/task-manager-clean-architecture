@@ -1,0 +1,15 @@
+﻿global using MediatR;
+global using FluentValidation;
+global using AutoMapper;
+global using TaskManagerCleanArchitecture.Domain.Entities;
+global using TaskManagerCleanArchitecture.Application.Interfaces;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Reflection;
+global using TaskManagerCleanArchitecture.Application.Behaviors;
+global using TaskManagerCleanArchitecture.Application.Exceptions;
+global using TaskManagerCleanArchitecture.Application.DTOs.Users;
+global using TaskManagerCleanArchitecture.Application.DTOs.Tasks;
+global using TaskManagerCleanArchitecture.Application.Features.Users.Commands;
+global using TaskManagerCleanArchitecture.Application.Features.Tasks.Commands;
+global using TaskManagerCleanArchitecture.Domain.Enums;
+global using System.Diagnostics.CodeAnalysis;

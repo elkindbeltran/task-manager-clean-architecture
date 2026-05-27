@@ -1,0 +1,1 @@
+﻿global using TaskManagerCleanArchitecture.Domain.Common;
