@@ -21,3 +21,4 @@ global using TaskManagerCleanArchitecture.Application.DTOs.Users;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using TaskManager.Api.Extensions;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.OpenApi.Models;
