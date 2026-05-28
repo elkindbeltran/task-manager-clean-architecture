@@ -1,4 +1,4 @@
-﻿namespace TaskManagerCleanArchitecture.IntegrationTests.Controllers;
+﻿namespace TaskManagerCleanArchitecture.IntegrationTests.Controllers.Tasks;
 
 public class TasksControllerTests : TestBase
 {
