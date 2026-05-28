@@ -12,11 +12,17 @@ public static class ApplicationBuilderExtensions
         }
 
         app.UseMiddleware<CorrelationIdMiddleware>();
-        app.UseMiddleware<ExceptionMiddleware>();        
+        app.UseMiddleware<ExceptionMiddleware>();
 
-        app.MapControllers();
+        app.UseHttpsRedirection();
 
         app.UseCors("AllowAngular");
+
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
 
         return app;
     }

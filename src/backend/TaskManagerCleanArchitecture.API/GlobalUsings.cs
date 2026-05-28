@@ -18,3 +18,6 @@ global using TaskManagerCleanArchitecture.Domain.Enums;
 global using System.Diagnostics.CodeAnalysis;
 global using TaskManagerCleanArchitecture.Application.DTOs.Tasks;
 global using TaskManagerCleanArchitecture.Application.DTOs.Users;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using TaskManager.Api.Extensions;
+global using Microsoft.AspNetCore.Authorization;

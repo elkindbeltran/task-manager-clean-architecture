@@ -1,5 +1,6 @@
 ﻿namespace TaskManagerCleanArchitecture.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class TasksController : ControllerBase
