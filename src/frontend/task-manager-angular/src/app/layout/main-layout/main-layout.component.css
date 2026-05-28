@@ -102,3 +102,36 @@ th {
 .action-btn.done {
   color: #ef4444;
 }
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  background-color: #3f51b5 !important;
+  color: white;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-weight: 600;
+  font-size: 16px;
+
+  text-transform: uppercase;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 500;
+}
