@@ -1,4 +1,6 @@
-﻿namespace TaskManagerCleanArchitecture.IntegrationTests.Fixtures;
+﻿using TaskManagerCleanArchitecture.IntegrationTests.Infrastructure;
+
+namespace TaskManagerCleanArchitecture.IntegrationTests.Fixtures;
 
 public abstract class TestBase
     : IClassFixture<CustomWebApplicationFactory>

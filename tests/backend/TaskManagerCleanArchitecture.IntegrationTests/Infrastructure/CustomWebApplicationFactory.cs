@@ -1,4 +1,4 @@
-﻿namespace TaskManagerCleanArchitecture.IntegrationTests;
+﻿namespace TaskManagerCleanArchitecture.IntegrationTests.Infrastructure;
 
 public class CustomWebApplicationFactory
     : WebApplicationFactory<Program>
@@ -31,6 +31,19 @@ public class CustomWebApplicationFactory
             {
                 options.UseInMemoryDatabase("TestDb");
             });
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = "Test";
+
+                    options.DefaultChallengeScheme = "Test";
+                })
+                .AddScheme<
+                    AuthenticationSchemeOptions,
+                    TestAuthHandler>(
+                    "Test",
+                    options => { });
         });
     }
 }
