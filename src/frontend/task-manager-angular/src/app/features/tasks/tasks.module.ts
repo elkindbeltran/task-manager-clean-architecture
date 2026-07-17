@@ -16,9 +16,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -36,9 +36,9 @@ import { MatSortModule } from '@angular/material/sort';
     MatSelectModule,
     MatInputModule,
     MatTooltipModule,
-    MatSnackBarModule,
     MatProgressBarModule,
-    MatSortModule
+    MatSortModule,
+    MatIconModule
   ]
 })
 export class TasksModule { }

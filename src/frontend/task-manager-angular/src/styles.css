@@ -1,5 +1,98 @@
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f1f5f9;
+  color: #17212f;
+  font-family: Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-stroked-button {
+  font-family: inherit;
+}
+
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-container-shape: 8px;
+  --mdc-outlined-text-field-outline-color: #d9e2ec;
+  --mdc-outlined-text-field-hover-outline-color: #9fb2c7;
+  --mdc-outlined-text-field-focus-outline-color: #2563eb;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  min-height: 0;
+}
+
+.mat-mdc-row {
+  min-height: 64px;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background: #fbfdff;
+}
+
+.mat-mdc-icon-button {
+  --mdc-icon-button-state-layer-size: 40px;
+}
+
+.enterprise-snackbar {
+  --mdc-snackbar-container-color: transparent;
+  --mat-mdc-snack-bar-button-color: #cbd5e1;
+  margin-top: 72px !important;
+}
+
+.enterprise-snackbar .mdc-snackbar__surface {
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.enterprise-snackbar .mat-mdc-snack-bar-label {
+  padding: 0 !important;
+}
+
+.user-select-panel .mat-mdc-option {
+  min-height: 58px;
+}
+
+.user-select-panel .mdc-list-item__primary-text {
+  width: 100%;
+}
+
+.user-select-panel .user-option {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.user-select-panel .user-option strong {
+  color: #17212f;
+  font-size: 14px;
+  font-weight: 850;
+  white-space: normal;
+}
+
+.user-select-panel .user-option small {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: normal;
+  word-break: break-word;
+}
 
 #app-loader {
   position: fixed;
@@ -18,8 +111,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid #ddd;
-  border-top: 5px solid #3f51b5;
+  border: 5px solid #d9e2ec;
+  border-top: 5px solid #2563eb;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 10px;

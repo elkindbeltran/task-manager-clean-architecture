@@ -12,15 +12,20 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { NotificationSnackbarComponent } from './core/notifications/notification-snackbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainLayoutComponent    
+    MainLayoutComponent,
+    NotificationSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,9 @@ import { AuthInterceptor } from './core/auth/auth.interceptor';
     MatToolbarModule,
     MatListModule,
     MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatSnackBarModule,
     AuthModule.forRoot({
     domain: environment.auth.domain,
     clientId: environment.auth.clientId,

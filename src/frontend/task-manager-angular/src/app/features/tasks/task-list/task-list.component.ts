@@ -4,8 +4,8 @@ import { Task } from '../models/task.model';
 import { Router } from '@angular/router';
 import { User } from '../../users/models/user.model';
 import { UserService } from '../../users/services/user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Sort } from '@angular/material/sort';
+import { NotificationService } from 'src/app/core/notifications/notification.service';
 
 @Component({
   selector: 'app-task-list',
@@ -34,7 +34,7 @@ export class TaskListComponent implements OnInit {
   constructor(
     private taskService: TaskService,
     private userService: UserService,
-    private snackBar: MatSnackBar,
+    private notifications: NotificationService,
     private router: Router
   ) {}
 
@@ -53,6 +53,9 @@ export class TaskListComponent implements OnInit {
       error: err => {
         this.showProgressBar = false;
         console.error(err);
+        this.notifications.errorFromResponse(err, 'Unable to load users.', {
+          title: 'Users unavailable'
+        });
       }
     });
   }
@@ -71,6 +74,9 @@ export class TaskListComponent implements OnInit {
       error: err => {
         this.showProgressBar = false;
         console.error('Error loading tasks', err);
+        this.notifications.errorFromResponse(err, 'Unable to load tasks.', {
+          title: 'Tasks unavailable'
+        });
       }
     });
   }
@@ -83,24 +89,17 @@ export class TaskListComponent implements OnInit {
     this.showProgressBar = true;
     this.taskService.changeStatus(task.id, status)
       .subscribe({
-        next: () => this.loadTasks(),
+        next: () => {
+          this.notifications.success('The task status was updated.', {
+            title: 'Task updated'
+          });
+          this.loadTasks();
+        },
         error: err => {
           this.showProgressBar = false;
           console.error('Error changing status', err);
-
-          let errorMessage = 'Error changing status';
-
-          if (err?.error?.Errors?.length) {
-            errorMessage = err.error.Errors
-              .map((e: any) => `${e.PropertyName}: ${e.ErrorMessage}`)
-              .join('\n');
-          } else if (err?.error?.Message) {
-            errorMessage = err.error.Message;
-          }
-
-          this.snackBar.open(errorMessage, 'Close', {
-            duration: 6000,
-            panelClass: ['snackbar-error']
+          this.notifications.errorFromResponse(err, 'Error changing status.', {
+            title: 'Status change blocked'
           });
         }
       });
@@ -115,5 +114,9 @@ export class TaskListComponent implements OnInit {
     this.sort = sort.direction || 'asc';
 
     this.loadTasks();
-  }  
+  }
+
+  getTaskCountByStatus(status: string): number {
+    return this.tasks.filter(task => task.status === status).length;
+  }
 }

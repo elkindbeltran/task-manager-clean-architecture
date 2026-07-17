@@ -1,35 +1,62 @@
-<h2>Create Task</h2>
+<section class="form-page">
+  <div class="form-copy">
+    <p class="eyebrow">Task intake</p>
+    <h1>Create Task</h1>
+    <p>
+      Add a clear task title, assign ownership, and include optional JSON metadata for priority,
+      tags, or planning details.
+    </p>
+  </div>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
+  <form class="form-panel" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="panel-header">
+      <mat-icon>add_task</mat-icon>
+      <div>
+        <h2>Task details</h2>
+        <span>Required fields are validated before saving.</span>
+      </div>
+    </div>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="title">
-  </mat-form-field>
+    <div class="form-grid">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Additional Data</mat-label>
-    <textarea matInput formControlName="additionalData"></textarea>
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width user-field">
+        <mat-label>User</mat-label>
+        <mat-select formControlName="userId" panelClass="user-select-panel">
+          <mat-select-trigger>
+            <span class="selected-user" *ngIf="selectedUser as user">
+              <strong>{{ user.name }}</strong>
+              <small>{{ user.email }}</small>
+            </span>
+          </mat-select-trigger>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>User</mat-label>
+          <mat-option *ngFor="let user of users" [value]="user.id">
+            <span class="user-option">
+              <strong>{{ user.name }}</strong>
+              <small>{{ user.email }}</small>
+            </span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-select formControlName="userId">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Additional Data</mat-label>
+        <textarea matInput rows="8" formControlName="additionalData"></textarea>
+      </mat-form-field>
+    </div>
 
-      <mat-option *ngFor="let user of users" [value]="user.id">
-        {{ user.name }} ({{ user.email }})
-      </mat-option>
+    <div class="form-actions">
+      <button mat-flat-button class="primary-action" type="submit" [disabled]="form.invalid || loading">
+        <mat-icon>save</mat-icon>
+        {{ loading ? 'Saving...' : 'Create Task' }}
+      </button>
 
-    </mat-select>
-
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading" style="margin-right: 20px;">
-    {{ loading ? 'Saving...' : 'Create Task' }}
-  </button>
-
-  <button mat-raised-button color="accent" (click)="goToTaskList()">
-    Cancel
-  </button>
-</form>
+      <button mat-stroked-button type="button" (click)="goToTaskList()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</section>

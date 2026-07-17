@@ -1,104 +1,138 @@
-<div *ngIf="showProgressBar === true" id="loding_div">
+<div *ngIf="showProgressBar === true" class="page-progress">
   <mat-progress-bar mode="indeterminate" value="100"></mat-progress-bar>
 </div>
 
-<div class="toolbar-filters">
-
-  <div class="filters-left">
-
-    <mat-form-field appearance="outline" class="filter">
-      <mat-label>Status</mat-label>
-      <mat-select [(ngModel)]="selectedStatus" (selectionChange)="onStatusFilterChange()">
-        <mat-option value="">All</mat-option>
-        <mat-option value="Pending">Pending</mat-option>
-        <mat-option value="InProgress">InProgress</mat-option>
-        <mat-option value="Done">Done</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="filter-long">
-      <mat-label>User</mat-label>
-      <mat-select [(ngModel)]="selectedUserId" (selectionChange)="onStatusFilterChange()">
-        <mat-option value="">All</mat-option>
-        <mat-option *ngFor="let user of users" [value]="user.id">
-          {{ user.name }} ({{ user.email }})
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
+<section class="page-hero">
+  <div>
+    <p class="eyebrow">Task workspace</p>
+    <h1>Tasks</h1>
+    <p class="page-description">
+      Track ownership, status, metadata, and delivery flow from a focused operational view.
+    </p>
   </div>
 
-  <div class="filters-right">
-    <button mat-raised-button color="primary" (click)="goToTaskCreate()">
-      New Task
-    </button>
+  <button mat-flat-button class="primary-action" (click)="goToTaskCreate()">
+    <mat-icon>add</mat-icon>
+    New Task
+  </button>
+</section>
+
+<section class="metrics-grid" aria-label="Task summary">
+  <article class="metric-card">
+    <span>Total tasks</span>
+    <strong>{{ tasks.length }}</strong>
+  </article>
+
+  <article class="metric-card pending">
+    <span>Pending</span>
+    <strong>{{ getTaskCountByStatus('Pending') }}</strong>
+  </article>
+
+  <article class="metric-card progress">
+    <span>In progress</span>
+    <strong>{{ getTaskCountByStatus('InProgress') }}</strong>
+  </article>
+
+  <article class="metric-card done">
+    <span>Done</span>
+    <strong>{{ getTaskCountByStatus('Done') }}</strong>
+  </article>
+</section>
+
+<section class="surface">
+  <div class="surface-toolbar">
+    <div class="filters-left">
+      <mat-form-field appearance="outline" class="filter">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="selectedStatus" (selectionChange)="onStatusFilterChange()">
+          <mat-option value="">All</mat-option>
+          <mat-option value="Pending">Pending</mat-option>
+          <mat-option value="InProgress">In progress</mat-option>
+          <mat-option value="Done">Done</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-long">
+        <mat-label>User</mat-label>
+        <mat-select [(ngModel)]="selectedUserId" (selectionChange)="onStatusFilterChange()">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let user of users" [value]="user.id">
+            {{ user.name }} ({{ user.email }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
 
-</div>
+  <div class="table-wrap">
+    <table mat-table [dataSource]="tasks" matSort (matSortChange)="onSortChange($any($event))">
 
-<table mat-table [dataSource]="tasks" matSort (matSortChange)="onSortChange($any($event))" class="mat-elevation-z8">
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="createdAt">
+          Created
+        </th>
+        <td mat-cell *matCellDef="let task"> {{ task.createdAt | date:'mediumDate' }} </td>
+      </ng-container>
 
-  <ng-container matColumnDef="createdAt">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header="createdAt">
-      Creation Date
-    </th>
-    <td mat-cell *matCellDef="let task"> {{ task.createdAt | date:'short' }} </td>
-  </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let task">
+          <div class="task-title">
+            <span>{{ task.title }}</span>
+            <small>{{ task.id }}</small>
+          </div>
+        </td>
+      </ng-container>
 
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef>Title</th>
-    <td mat-cell *matCellDef="let task">{{ task.title }}</td>
-  </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let task">
+          <span class="status-badge" [ngClass]="{
+            'pending': task.status === 'Pending',
+            'inprogress': task.status === 'InProgress',
+            'done': task.status === 'Done'
+            }">
+            {{ task.status }}
+          </span>
+        </td>
+      </ng-container>
 
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef style="text-align: center !important;">Status</th>
-    <td mat-cell *matCellDef="let task">
-      <div class="status-cell">
-        <span class="status-circle" matTooltip="{{ task.status }}" [ngClass]="{
-          'pending': task.status === 'Pending',
-          'inprogress': task.status === 'InProgress',
-          'done': task.status === 'Done'
-          }">
-        </span>
-      </div>
-    </td>
-  </ng-container>
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef>Owner</th>
+        <td mat-cell *matCellDef="let task">
+          <span class="owner-pill">{{ task.userName }}</span>
+        </td>
+      </ng-container>
 
-  <ng-container matColumnDef="userName">
-    <th mat-header-cell *matHeaderCellDef>User</th>
-    <td mat-cell *matCellDef="let task">
-      {{ task.userName }}
-    </td>
-  </ng-container>
+      <ng-container matColumnDef="additionalData">
+        <th mat-header-cell *matHeaderCellDef>Additional Data</th>
+        <td mat-cell *matCellDef="let task">
+          <code class="metadata">{{ task.additionalData || 'No metadata' }}</code>
+        </td>
+      </ng-container>
 
-  <ng-container matColumnDef="additionalData">
-    <th mat-header-cell *matHeaderCellDef>Additional Data</th>
-    <td mat-cell *matCellDef="let task">
-      {{ task.additionalData }}
-    </td>
-  </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let task">
+          <div class="action-group">
+            <button mat-icon-button matTooltip="Mark pending" aria-label="Mark pending" (click)="changeStatus(task, 1)">
+              <mat-icon>radio_button_unchecked</mat-icon>
+            </button>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef style="text-align: center !important;">Actions</th>
-    <td mat-cell *matCellDef="let task">
+            <button mat-icon-button matTooltip="Move to in progress" aria-label="Move to in progress" (click)="changeStatus(task, 2)">
+              <mat-icon>pending_actions</mat-icon>
+            </button>
 
-      <button mat-button style="color: #ef4444;" (click)="changeStatus(task, 1)">
-        Pending
-      </button>
-      |
-      <button mat-button style="color: #22c55e;" (click)="changeStatus(task, 2)">
-        InProgress
-      </button>
-      |
-      <button mat-button style="color: #3b82f6;" (click)="changeStatus(task, 3)">
-        Done
-      </button>
+            <button mat-icon-button matTooltip="Mark done" aria-label="Mark done" (click)="changeStatus(task, 3)">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
 
-    </td>
-  </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-</table>
+    </table>
+  </div>
+</section>
