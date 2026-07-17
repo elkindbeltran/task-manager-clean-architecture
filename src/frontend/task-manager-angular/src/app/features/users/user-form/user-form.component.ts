@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'src/app/core/notifications/notification.service';
 
 @Component({
   selector: 'app-user-form',
@@ -17,7 +17,7 @@ export class UserFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private snackBar: MatSnackBar,
+    private notifications: NotificationService,
     private router: Router
   ) {}
 
@@ -29,7 +29,12 @@ export class UserFormComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.notifications.warning('Enter a valid name and email before creating the user.', {
+        title: 'Validation required'
+      });
+      return;
+    }
 
     this.loading = true;
 
@@ -37,25 +42,16 @@ export class UserFormComponent implements OnInit {
       .subscribe({
         next: () => {
           this.loading = false;
+          this.notifications.success('The user was created successfully.', {
+            title: 'User created'
+          });
           this.router.navigate(['/users']);
         },
         error: err => {
           this.loading = false;
           console.error('Error creating user', err);
-
-          let errorMessage = 'Error creating user';
-
-          if (err?.error?.Errors?.length) {
-            errorMessage = err.error.Errors
-              .map((e: any) => `${e.PropertyName}: ${e.ErrorMessage}`)
-              .join('\n');
-          } else if (err?.error?.Message) {
-            errorMessage = err.error.Message;
-          }
-
-          this.snackBar.open(errorMessage, 'Close', {
-            duration: 6000,
-            panelClass: ['snackbar-error']
+          this.notifications.errorFromResponse(err, 'Error creating user.', {
+            title: 'User not created'
           });
         }
       });

@@ -1,22 +1,40 @@
-<h2>Create User</h2>
+<section class="form-page">
+  <div class="form-copy">
+    <p class="eyebrow">Directory intake</p>
+    <h1>Create User</h1>
+    <p>
+      Add a user profile that can own tasks and appear clearly in assignment workflows.
+    </p>
+  </div>
 
-<form [formGroup]="form" (ngSubmit)="submit()">
+  <form class="form-panel" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="panel-header">
+      <mat-icon>person_add</mat-icon>
+      <div>
+        <h2>User details</h2>
+        <span>Name and email are required.</span>
+      </div>
+    </div>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Username</mat-label>
-    <input matInput formControlName="name">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading" style="margin-right: 20px;">
-    {{ loading ? 'Saving...' : 'Create User' }}
-  </button>
+    <div class="form-actions">
+      <button mat-flat-button class="primary-action" type="submit" [disabled]="form.invalid || loading">
+        <mat-icon>save</mat-icon>
+        {{ loading ? 'Saving...' : 'Create User' }}
+      </button>
 
-  <button mat-raised-button color="accent" (click)="goToUsersList()">
-    Cancel
-  </button>
-</form>
+      <button mat-stroked-button type="button" (click)="goToUsersList()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</section>

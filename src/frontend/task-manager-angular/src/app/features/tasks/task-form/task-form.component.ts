@@ -4,11 +4,12 @@ import { TaskService } from '../services/task.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../users/services/user.service';
 import { User } from '../../users/models/user.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from 'src/app/core/notifications/notification.service';
 
 @Component({
   selector: 'app-task-form',
-  templateUrl: './task-form.component.html'
+  templateUrl: './task-form.component.html',
+  styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent implements OnInit {
 
@@ -20,7 +21,7 @@ export class TaskFormComponent implements OnInit {
     private fb: FormBuilder,
     private taskService: TaskService,
     private userService: UserService,
-    private snackBar: MatSnackBar,
+    private notifications: NotificationService,
     private router: Router
   ) {}
 
@@ -39,27 +40,20 @@ export class TaskFormComponent implements OnInit {
       next: data => this.users = data,
       error: err => {
         console.error('Error loading users', err);
-
-        let errorMessage = 'Error loading users';
-
-        if (err?.error?.Errors?.length) {
-          errorMessage = err.error.Errors
-            .map((e: any) => `${e.PropertyName}: ${e.ErrorMessage}`)
-            .join('\n');
-        } else if (err?.error?.Message) {
-          errorMessage = err.error.Message;
-        }
-
-        this.snackBar.open(errorMessage, 'Close', {
-          duration: 6000,
-          panelClass: ['snackbar-error']
+        this.notifications.errorFromResponse(err, 'Error loading users.', {
+          title: 'Users unavailable'
         });
       }
     });
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.notifications.warning('Complete the required fields before creating the task.', {
+        title: 'Validation required'
+      });
+      return;
+    }
 
     this.loading = true;
 
@@ -70,25 +64,16 @@ export class TaskFormComponent implements OnInit {
       .subscribe({
         next: () => {
           this.loading = false;
+          this.notifications.success('The task was created successfully.', {
+            title: 'Task created'
+          });
           this.router.navigate(['/tasks']);
         },
         error: err => {
           this.loading = false;
           console.error('Error creating task', err);
-
-          let errorMessage = 'Error creating task';
-
-          if (err?.error?.Errors?.length) {
-            errorMessage = err.error.Errors
-              .map((e: any) => `${e.PropertyName}: ${e.ErrorMessage}`)
-              .join('\n');
-          } else if (err?.error?.Message) {
-            errorMessage = err.error.Message;
-          }
-
-          this.snackBar.open(errorMessage, 'Close', {
-            duration: 6000,
-            panelClass: ['snackbar-error']
+          this.notifications.errorFromResponse(err, 'Error creating task.', {
+            title: 'Task not created'
           });
         }
       });
@@ -96,5 +81,11 @@ export class TaskFormComponent implements OnInit {
 
   goToTaskList(): void {
     this.router.navigate(['/tasks']);
-  }  
+  }
+
+  get selectedUser(): User | undefined {
+    const selectedUserId = this.form?.get('userId')?.value;
+
+    return this.users.find(user => user.id === selectedUserId);
+  }
 }

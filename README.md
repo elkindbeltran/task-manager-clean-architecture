@@ -12,6 +12,10 @@ The solution also includes enterprise-grade authentication and authorization usi
 
 ## Architecture
 
+The following diagram summarizes the main runtime components, authentication flow, backend layers, database, tests, and primary technologies used by the solution.
+
+![Task Manager Clean Architecture Overview](docs/images/task-manager-architecture-overview.png)
+
 ### Solution structure
 
 ```text

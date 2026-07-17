@@ -1,0 +1,14 @@
+<div class="notification" [ngClass]="data.type">
+  <div class="icon-wrap">
+    <mat-icon>{{ iconByType[data.type] }}</mat-icon>
+  </div>
+
+  <div class="content">
+    <strong>{{ data.title }}</strong>
+    <span>{{ data.message }}</span>
+  </div>
+
+  <button mat-icon-button type="button" (click)="dismiss()" aria-label="Dismiss notification">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
